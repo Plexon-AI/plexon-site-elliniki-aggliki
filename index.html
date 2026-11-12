@@ -257,7 +257,7 @@ button{font:inherit;color:inherit}
 
 /* English marker treatment */
 .en{
-  background:linear-gradient(transparent 58%,var(--marker) 58%,var(--marker) 94%,transparent 94%);
+  background:linear-gradient(transparent 46%,var(--marker) 46%,var(--marker) 93%,transparent 93%);
   padding:0 .08em;font-weight:600;
 }
 .en-block{
@@ -276,6 +276,7 @@ button{font:inherit;color:inherit}
 .word:hover{border-color:var(--aegean-b);background:#FCFDFF}
 .word-main{min-width:0}
 .word-en{font-family:var(--f-display);font-weight:700;font-size:1.08rem;line-height:1.3;word-break:break-word}
+.word-en .en{background:none;padding:0;font-weight:700}
 .word-ph{font-family:var(--f-mono);font-size:.76rem;color:var(--ink-3);letter-spacing:.01em;margin-top:1px}
 .word-el{font-size:.92rem;color:var(--ink-2);margin-top:5px}
 .word-note{font-size:.8rem;color:var(--gold);margin-top:3px}
@@ -287,6 +288,7 @@ button{font:inherit;color:inherit}
 .spk:hover{background:var(--aegean-l);border-color:var(--aegean-b)}
 .spk:active{transform:scale(.94)}
 .spk.is-playing{background:var(--aegean);color:#fff;border-color:var(--aegean)}
+.spk-inline{display:inline-grid;width:28px;height:28px;flex:0 0 28px;vertical-align:-8px;margin-left:8px}
 .spk svg{display:block}
 
 /* ---------- Examples / dialogue ---------- */
@@ -558,6 +560,8 @@ button{font:inherit;color:inherit}
 .q-title{font-family:var(--f-display);font-weight:700;font-size:1.16rem;margin:10px 0 4px}
 .q-sub{color:var(--ink-3);font-size:.93rem}
 .q-hear{margin:14px 0 18px}
+.q-hear.audio-only{margin:10px 0 16px}
+.q-hint{font-size:.84rem;color:var(--ink-3);margin:12px 0 2px}
 .q-hear .en-block{font-size:1.35rem}
 .q-options{display:grid;gap:9px;margin-top:14px}
 .opt{position:relative;
@@ -1110,7 +1114,7 @@ const DATA = {
         ]
       },
       quiz:[
-        {q:'Πόσο κάνει ένας καφές στο βίντεο;', say:'Five euros', options:['Τρία','Τέσσερα','Πέντε','Δέκα'], a:2, why:'Το <span class="en">five</span> είναι 5.'},
+        {q:'Πώς λες «πέντε ευρώ»;', say:'Five euros', options:['Five euros','Five euro','Five pounds','Five euroses'], a:0, why:'Το <span class="en">five</span> είναι 5 και τα ευρώ είναι πάντα <span class="en">euros</span>.'},
         {q:'Πώς λέμε το 13;', say:'Thirteen', options:['Ten three','Thirteen','Thirteen teen','Thirty'], a:1, why:'Το 13 είναι <span class="en">thirteen</span>, μία λέξη. Το <span class="en">thirty</span> είναι 30.'},
         {q:'Πώς λέμε το 40;', say:'Forty', options:['Fourty','Forty','Fourteen','Fifty'], a:1, why:'Στα αγγλικά το <span class="en">forty</span> γράφεται χωρίς «u». Είναι το μοναδικό νούμερο που ξεγελάει.'},
         {q:'Πώς λέμε το 100;', say:'One hundred', options:['One hundred','A hundred','Hundred','Ten ten'], a:0, why:'Το 100 είναι <span class="en">one hundred</span>.'},
@@ -1516,7 +1520,7 @@ const DATA = {
         {q:'Πώς λες «πήγα»;', say:'went', options:['goed','went','gone','go'], a:1, why:'Το <span class="en">go</span> είναι ακανόνιστο: <span class="en">go → went</span>. Δεν είναι <span class="en">goed</span>.'},
         {q:'Πώς λες «Τι έκανες χθες;»;', say:'What did you do yesterday?', options:['What did you do yesterday?','What you did yesterday?','What did you yesterday?','What do you yesterday?'], a:0, why:'Στον αόριστο η ερώτηση έχει <span class="en">did</span> και το ρήμα στη βασική μορφή.'},
         {q:'Πώς λες «πριν από δύο μέρες»;', say:'Two days ago', options:['Two days ago','Two day ago','Two days before','In two days'], a:0, why:'Το <span class="en">ago</span> σημαίνει «πριν» και πάει μετά από το χρονικό διάστημα.'},
-        {q:'Ποιο είναι σωστό;', say:'I did not work', options:['I did not work','I did not worked','I not work yesterday','I did not works'], a:0, why:'Όταν υπάρχει το <span class="en">did</span>, το ρήμα παραμένει στη βασική μορφή.'}
+        {q:'Πώς λες «Δεν δούλευσα»;', say:'I did not work', options:['I did not work','I did not worked','I not work yesterday','I did not works'], a:0, why:'Όταν υπάρχει το <span class="en">did</span>, το ρήμα παραμένει στη βασική μορφή.'}
       ]
     },
 
@@ -1690,7 +1694,7 @@ const DATA = {
       },
       quiz:[
         {q:'Πώς λες «Αν βρέξει, θα μείνω στο σπίτι»;', say:'If it rains, I will stay at home', options:['If it rains, I will stay at home','If it will rain, I stay at home','If it rains, I will to stay home','If it is rain, I will stay home'], a:0, why:'Μετά το <span class="en">if</span> βάζεις παρούσα απλή, και μετά το <span class="en">will</span> τη βασική μορφή.'},
-        {q:'Ποιο είναι λάθος;', say:'If it will rain, I will stay home', options:['If it will rain, I will stay home','If it rains, I will stay home','If it rains, I stay at home','If it is rain, I will stay at home'], a:0, why:'Μετά το <span class="en">if</span> δεν βάζουμε <span class="en">will</span>.'},
+        {q:'Ποια πρόταση είναι λάθος για το «Αν βρέξει, θα μείνω στο σπίτι»;', say:'If it will rain, I will stay home', options:['If it will rain, I will stay home','If it rains, I will stay home','If it rains, I stay at home','If it is rain, I will stay at home'], a:0, why:'Μετά το <span class="en">if</span> δεν βάζουμε <span class="en">will</span>.'},
         {q:'Πώς λες «Αν έρθει, πες της ότι είμαι εδώ»;', say:'If she comes, tell her I am here', options:['If she comes, tell her I am here','If she will come, tell her I am here','If she comes, tell to her I am here','If she come, tell her I am here'], a:0, why:'Το <span class="en">tell</span> παίρνει απευθείας το αντικείμενο: <span class="en">tell her</span>, όχι <span class="en">tell to her</span>.'},
         {q:'Πώς ρωτάς «Τι θα κάνεις αν...»;', say:'What will you do if...?', options:['What will you do if...?','What you will do if...?','What do you will if...?','What will you do when...?'], a:0, why:'Με το <span class="en">what</span> το ρήμα πάει με <span class="en">will</span>.'},
         {q:'Ποια λέξη σημαίνει «ομπρέλα»;', say:'Umbrella', options:['Umbrella','Umber','Umbra','Ubrella'], a:0, why:'Το <span class="en">umbrella</span> είναι η ομπρέλα. Με δύο <span class="en">m</span>.'}
@@ -1807,7 +1811,7 @@ const DATA = {
         {q:'Πώς λες «Αν είχα περισσότερο χρόνο»;', say:'If I had more time', options:['If I had more time','If I would have more time','If I will have more time','If I have more time'], a:0, why:'Μετά το <span class="en">if</span> βάζεις <span class="en">had</span> και όχι <span class="en">would have</span>.'},
         {q:'Πώς λες «Ας είχα ένα αυτοκίνητο»;', say:'I wish I had a car', options:['I wish I had a car','I wish I have a car','I wish I would have a car','I wish I had car'], a:0, why:'Το <span class="en">wish</span> παίρνει <span class="en">had</span> όταν μιλάς για το παρελθόν.'},
         {q:'Πώς λες «Αν ήμουν εσύ»;', say:'If I were you', options:['If I were you','If I was you','If I be you','If I would you'], a:0, why:'Με το <span class="en">I</span> η φανταστική υποπέθεση θέλει <span class="en">were</span>.'},
-        {q:'Ποιο είναι λάθος;', say:'If I were rich, I will travel', options:['If I were rich, I will travel','If I were rich, I would travel','If I was rich, I would travel','If I were rich, I would to travel'], a:0, why:'Με το <span class="en">would</span> το ρήμα μένει στη βασική μορφή, χωρίς <span class="en">to</span>.'}
+        {q:'Ποια πρόταση είναι λάθος για το «Αν ήμουν πλούσιος, θα ταξιδεύα»;', say:'If I were rich, I will travel', options:['If I were rich, I will travel','If I were rich, I would travel','If I was rich, I would travel','If I were rich, I would to travel'], a:0, why:'Με το <span class="en">would</span> το ρήμα μένει στη βασική μορφή, χωρίς <span class="en">to</span>.'}
       ]
     },
     {
@@ -1921,7 +1925,7 @@ const DATA = {
         {q:'Πώς λες «Είπε ότι ήταν κουρασμένη»;', say:'She said that she was tired', options:['She said that she was tired','She said that she is tired','She says that she was tired','She said that she were tired'], a:0, why:'Οι χρόνοι πάνε ένα βήμα πίσω: <span class="en">is</span> → <span class="en">was</span>.'},
         {q:'Πώς λες «Μου είπε ότι θα έρθει»;', say:'He told me that he would come', options:['He told me that he would come','He told that me he would come','He said me that he will come','He told to me that he would come'], a:0, why:'Με το <span class="en">told</span> βάζεις απευθείας το αντικείμενο: <span class="en">told me</span>.'},
         {q:'Πώς λες «Ρώτησαν αν ήμουν έτοιμος»;', say:'They asked if I was ready', options:['They asked if I was ready','They asked that I was ready','They asked if I am ready','They asked me if I am ready'], a:0, why:'Σε ερώτηση με <span class="en">if</span> ο χρόνος του ρήματος αλλάζει: <span class="en">am</span> → <span class="en">was</span>.'},
-        {q:'Ποιο είναι σωστό;', say:'He said that she was late', options:['He said that she was late','He said that she is late','He said that she was be late','He say that she was late'], a:0, why:'Στο <span class="en">said</span> βάζεις <span class="en">was</span> και κρατάς το <span class="en">she</span> του προσώπου που μιλάει.'},
+        {q:'Πώς λες «Είπε ότι ήταν αργά»;', say:'He said that she was late', options:['He said that she was late','He said that she is late','He said that she was be late','He say that she was late'], a:0, why:'Στο <span class="en">said</span> βάζεις <span class="en">was</span> και κρατάς το <span class="en">she</span> του προσώπου που μιλάει.'},
         {q:'Πώς λες «Μου είπε ότι μπορούσα να βοηθήσω»;', say:'He told me that I could help', options:['He told me that I could help','He told me that I can help','He said me that I could help','He told me that I could to help'], a:0, why:'Το <span class="en">can</span> γίνεται <span class="en">could</span> στην έμμεση ομιλία.'}
       ]
     },
@@ -1977,7 +1981,7 @@ const DATA = {
       quiz:[
         {q:'Πώς λες «Αν είχα διαβάσει, θα είχα περάσει την εξέταση»;', say:'If I had studied, I would have passed the exam', options:['If I had studied, I would have passed the exam','If I studied, I would have passed the exam','If I had studied, I will have passed the exam','If I would studied, I had passed the exam'], a:0, why:'Μετά το <span class="en">if</span> βάζεις <span class="en">had</span>, και μετά <span class="en">would have</span>.'},
         {q:'Πώς λες «Θα έπρεπε να σου είχα πει νωρίτερα»;', say:'I should have told you earlier', options:['I should have told you earlier','I should told you earlier','I should have tell you earlier','I should have told you more early'], a:0, why:'Το <span class="en">should have</span> παίρνει τρίτη μορφή: <span class="en">told</span>.'},
-        {q:'Ποιο είναι σωστό;', say:'If I had left earlier, I would have caught the train', options:['If I had left earlier, I would have caught the train','If I would have left earlier, I had caught the train','If I left earlier, I would have caught the train','If I had left earlier, I would catch the train'], a:0, why:'Η τρίτη υποπέθεση θέλει <span class="en">had</span> μετά το <span class="en">if</span> και <span class="en">would have</span> μετά.'},
+        {q:'Πώς λες «Αν είχα φύγει νωρίτερα, θα το είχα προλάβει»;', say:'If I had left earlier, I would have caught the train', options:['If I had left earlier, I would have caught the train','If I would have left earlier, I had caught the train','If I left earlier, I would have caught the train','If I had left earlier, I would catch the train'], a:0, why:'Η τρίτη υποπέθεση θέλει <span class="en">had</span> μετά το <span class="en">if</span> και <span class="en">would have</span> μετά.'},
         {q:'Ποιο σημαίνει «δεν χρειάστηκε να»;', say:'did not have to', options:['did not have to','had to','should have','might have'], a:0, why:'Το <span class="en">did not have to</span> είναι το αντίθετο του <span class="en">had to</span>.'},
         {q:'Πώς λες «Ας είχα ρωτήσει»;', say:'I wish I had asked', options:['I wish I had asked','I wish I asked','I wish I would ask','I wish I have asked'], a:0, why:'Το <span class="en">wish</span> με παρελθοντικό ρήμα παίρνει <span class="en">had</span>.'}
       ]
@@ -2028,9 +2032,9 @@ const DATA = {
         ]
       },
       quiz:[
-        {q:'Τι σημαίνει «α piece of cake»;', say:'A piece of cake', options:['πολύ εύκολο','ένα γλυκό','μια μικρή πρόταση','λάθος'], a:0, why:'Το <span class="en">a piece of cake</span> στα αγγλικά σημαίνει «πανεύκολο».'},
+        {q:'Τι σημαίνει «a piece of cake»;', say:'A piece of cake', options:['πολύ εύκολο','ένα γλυκό','μια μικρή πρόταση','λάθος'], a:0, why:'Το <span class="en">a piece of cake</span> στα αγγλικά σημαίνει «πανεύκολο».'},
         {q:'Πώς λες «ήμουν άρρωστος»;', say:'under the weather', options:['under the weather','under the rain','over the weather','in the weather'], a:0, why:'Το <span class="en">under the weather</span> είναι το ιδιωματισμός για το «άρρωστος».'},
-        {q:'Τι σημαίνει «break the ice»;', say:'να ανοίξεις τη συζήτηση', options:['να σπάσεις τον πάγο','να χαλάσεις κάτι','να παγώσει το νερό','να βρεις τον πάγο'], a:0, why:'Στα αγγλικά σπάεις τον πάγο για να ξεκινήσει μια συζήτηση. Στα ελληνικά λέμε «σπάει τους πάγους».'},
+        {q:'Τι σημαίνει «break the ice»;', say:'break the ice', options:['να σπάσεις τον πάγο','να χαλάσεις κάτι','να παγώσει το νερό','να βρεις τον πάγο'], a:0, why:'Στα αγγλικά σπάεις τον πάγο για να ξεκινήσει μια συζήτηση. Στα ελληνικά λέμε «σπάει τους πάγους».'},
         {q:'Πώς λες «πολύ σπάνια»;', say:'once in a blue moon', options:['once in a blue moon','one blue moon','in the blue moon','a moon once'], a:0, why:'Το <span class="en">once in a blue moon</span> σημαίνει «πολύ σπάνια».'},
         {q:'Τι σημαίνει «αποκαλύπτει το μυστικό»;', say:'let the cat out of the bag', options:['let the cat out of the bag','put the cat in the bag','the cat is out of the bag','open the cat bag'], a:0, why:'Η έκφραση είναι <span class="en">let the cat out of the bag</span>. Υπάρχει και το <span class="en">spill the beans</span>.'}
       ]
@@ -2092,7 +2096,7 @@ const DATA = {
         {q:'Πώς λες «Το σπίτι μου είναι μεγαλύτερο από το δικό σου»;', say:'My house is bigger than your house', options:['My house is bigger than your house','My house is bigger from your house','My house more big than your house','My house is big than your house'], a:0, why:'Το συγκριστικό <span class="en">bigger</span> παίρνει το <span class="en">than</span> μετά: <span class="en">bigger than</span>.'},
         {q:'Πώς λες «Είναι η καλύτερη δασκάλα στο σχολείο»;', say:'She is the best teacher in the school', options:['She is the best teacher in the school','She is the most best teacher in the school','She is the better teacher in the school','She is the bestest teacher in the school'], a:0, why:'Το <span class="en">good</span> γίνεται <span class="en">better</span> και <span class="en">the best</span>, με το <span class="en">the</span> πριν.'},
         {q:'Πώς λες «Αυτό το αυτοκίνητο είναι τόσο γρήγορο όσο εκείνο»;', say:'This car is as fast as that car', options:['This car is as fast as that car','This car is as fast as this car','This car as fast as that car','This car is so fast as that car'], a:0, why:'Με το <span class="en">as ... as</span> λέμε ότι είναι ίσα.'},
-        {q:'Ποιο είναι σωστό;', say:'good, better, the best', options:['good, better, the best','good, gooder, the goodest','good, more good, the most good','good, better, better'], a:0, why:'Τα <span class="en">good</span>, <span class="en">bad</span> και <span class="en">many</span> είναι ακανόνιστα.'},
+        {q:'Πώς διατυπώνεται σωστά το good, το better και το ανώτατο βαθμό του;', say:'good, better, the best', options:['good, better, the best','good, gooder, the goodest','good, more good, the most good','good, better, better'], a:0, why:'Τα <span class="en">good</span>, <span class="en">bad</span> και <span class="en">many</span> είναι ακανόνιστα.'},
         {q:'Πώς λες «Αυτός ο καφές είναι φθηνότερος από εκείνον»;', say:'This coffee is cheaper than that coffee', options:['This coffee is cheaper than that coffee','This coffee is cheaper from that coffee','This coffee more cheap than that coffee','This coffee is cheap than that coffee'], a:0, why:'Τα περισσότερα επίθετα παίρνουν το <span class="en">-er</span> και μετά το <span class="en">than</span>.'}
       ]
     },
@@ -2159,7 +2163,7 @@ const DATA = {
         {q:'Πώς λες «Πρέπει να φοράς ζώνη ασφαλείας στο αυτοκίνητο»;', say:'You must wear a seatbelt in the car', options:['You must wear a seatbelt in the car','You must to wear a seatbelt in the car','You must wearing a seatbelt in the car','You must wears a seatbelt in the car'], a:0, why:'Μετά το <span class="en">must</span> έρχεται η βασική μορφή του ρήματος, χωρίς <span class="en">to</span>.'},
         {q:'Πώς λες «Δεν χρειάζεται να δουλεύεις την Κυριακή»;', say:'You do not have to work on Sunday', options:['You do not have to work on Sunday','You do not have work on Sunday','You not have to work on Sunday','You do not need to work on Sunday'], a:0, why:'Το <span class="en">do not have to</span> σημαίνει «δεν χρειάζεται να». Το <span class="en">need to</span> σημαίνει «χρειάζεται να».'},
         {q:'Πώς λες «Θα έπρεπε να δεις γιατρό»;', say:'You should see a doctor', options:['You should see a doctor','You should to see a doctor','You should seeing a doctor','You should seen a doctor'], a:0, why:'Με το <span class="en">should</span> και με το <span class="en">must</span> δεν βάζουμε <span class="en">to</span>.'},
-        {q:'Ποιο είναι σωστό;', say:'must not', options:['must not','must not to','do not must','not must'], a:0, why:'Το <span class="en">must not</span> σημαίνει «απαγορεύεται». Το <span class="en">do not have to</span> σημαίνει «δεν χρειάζεται να».'},
+        {q:'Πώς λες «Απαγορεύεται, δεν πρέπει»;', say:'must not', options:['must not','must not to','do not must','not must'], a:0, why:'Το <span class="en">must not</span> σημαίνει «απαγορεύεται». Το <span class="en">do not have to</span> σημαίνει «δεν χρειάζεται να».'},
         {q:'Πώς λες «Πρέπει να οδηγείς πιο αργά»;', say:'You must drive slower', options:['You must drive slower','You must drive more slow','You must drives slower','You must to drive slower'], a:0, why:'Το <span class="en">slow</span> στο συγκριστικό γίνεται <span class="en">slower</span>, με το <span class="en">than</span> μετά.'}
       ]
     },
@@ -2222,7 +2226,7 @@ const DATA = {
         {q:'Πώς λες «Υπάρχει λίγο γάλα και λίγο ψωμί»;', say:'There is some milk and some bread', options:['There is some milk and some bread','There are some milk and some bread','There is a milk and a bread','There is some milk and some breads'], a:0, why:'Το <span class="en">some</span> χρησιμοποιείται με αμετρήσια και σε θετική πρόταση. Το <span class="en">is</span> έρχεται με ένα αμετρήσιο.'},
         {q:'Πώς λες «Δεν έχω καθόλου χρήματα»;', say:'I do not have any money', options:['I do not have any money','I do not have some money','I not have any money','I do not any money have'], a:0, why:'Στην αρνητική πρόταση και στην ερώτηση χρησιμοποιείς πάντα <span class="en">any</span>, όχι <span class="en">some</span>.'},
         {q:'Πώς λες «Έχεις κάποια ερώτηση»;', say:'Do you have any questions', options:['Do you have any questions','Do you have some questions','Do you have a questions','Do you any have questions'], a:0, why:'Σε ερώτηση χρησιμοποιείς <span class="en">any</span>.'},
-        {q:'Ποιο είναι σωστό;', say:'much water, many people', options:['much water, many people','many water, much people','much water, much people','many water, many people'], a:0, why:'Το <span class="en">much</span> με αμετρήσια, το <span class="en">many</span> με μετρήσια.'},
+        {q:'Πώς λες «πολύ νερό, πολλοί άνθρωποι»;', say:'much water, many people', options:['much water, many people','many water, much people','much water, much people','many water, many people'], a:0, why:'Το <span class="en">much</span> με αμετρήσια, το <span class="en">many</span> με μετρήσια.'},
         {q:'Πώς λες «Υπάρχει αρκετός χρόνος»;', say:'There is enough time', options:['There is enough time','There is enough times','There is enough the time','There is enough time to go'], a:0, why:'Το <span class="en">enough</span> δεν παίρνει άρθρο και δεν αλλάζει σε πληθυντικό.'}
       ]
     },
@@ -2287,7 +2291,7 @@ const DATA = {
         {q:'Πώς λες «Μου αρέσει να διαβάζω βιβλία»;', say:'I enjoy reading books', options:['I enjoy reading books','I enjoy to read books','I enjoy read books','I enjoy books reading'], a:0, why:'Μετά το <span class="en">enjoy</span> έρχεται το <span class="en">-ing</span>.'},
         {q:'Πώς λες «Αποφάσισα να μάθω αγγλικά»;', say:'I decided to learn English', options:['I decided to learn English','I decided learning English','I decided learn English','I decided to learning English'], a:0, why:'Μετά το <span class="en">decide</span> και το <span class="en">want</span> ακολουθεί το <span class="en">to</span> και η βασική μορφή.'},
         {q:'Πώς λες «Σταμάτησε το κάπνισμα»;', say:'He stopped smoking', options:['He stopped smoking','He stopped to smoke','He stop smoking','He stopped smoke'], a:0, why:'Το <span class="en">stop</span> με <span class="en">-ing</span> σημαίνει «σταμάτησε να κάνει». Το <span class="en">stop to</span> + μορφή σημαίνει «σταμάτησε για να κάνει».'},
-        {q:'Ποιο είναι σωστό;', say:'swimming, running', options:['swimming, running','swiming, runing','swimmming, runnning','swiming, running'], a:0, why:'Το <span class="en">swim</span> κάνει διπλό <span class="en">m</span> και το <span class="en">run</span> διπλό <span class="en">n</span>.'},
+        {q:'Πώς γράφονται σωστά το swim και το run στο -ing;', say:'swimming, running', options:['swimming, running','swiming, runing','swimmming, runnning','swiming, running'], a:0, why:'Το <span class="en">swim</span> κάνει διπλό <span class="en">m</span> και το <span class="en">run</span> διπλό <span class="en">n</span>.'},
         {q:'Πώς λες «Θέλει να ταξιδέψει»;', say:'She wants to travel', options:['She wants to travel','She wants travel','She wants travelling','She want to travel'], a:0, why:'Με το <span class="en">want</span> ακολουθεί το <span class="en">to</span> και η βασική μορφή. Το <span class="en">I</span> παίρνει πάντα <span class="en">want</span>, όχι <span class="en">wants</span>.'}
       ]
     },
@@ -2420,7 +2424,7 @@ const DATA = {
         {q:'Πώς λες «Αν και ήταν αργά, τελειώσαμε τη δουλειά»;', say:'Although it was late, we finished the work', options:['Although it was late, we finished the work','Although it was late but we finished the work','Although late, we finished the work','Although it was late, we finished work'], a:0, why:'Με το <span class="en">although</span> δεν βάζεις <span class="en">but</span> στην ίδια πρόταση.'},
         {q:'Πώς λες «Έβρεχε, άρα μείναμε στο σπίτι»;', say:'It was raining, so we stayed at home', options:['It was raining, so we stayed at home','It was raining, so we stayed home','It was rain, so we stayed at home','It was raining, because we stayed at home'], a:0, why:'Το <span class="en">so</span> δείχνει αποτέλεσμα, το <span class="en">because</span> δείχνει αιτία.'},
         {q:'Πώς λες «Ωστόσο, δεν συμφωνώ με αυτή την ιδέα»;', say:'However, I do not agree with this idea', options:['However, I do not agree with this idea','However, I not agree with this idea','However, I do not agrees with this idea','However, I do not agree this idea'], a:0, why:'Το <span class="en">however</span> πάει στη μέση της πρότασης με κόμματα γύρω του.'},
-        {q:'Ποιο είναι σωστό;', say:'Although it was late, we finished the work', options:['Although it was late, we finished the work','Although it was late but we finished the work','But although it was late, we finished the work','Although it was late, but we finished the work'], a:0, why:'Μια πρόταση έχει μία σύνδεση. Το <span class="en">although</span> και το <span class="en">but</span> δεν μαζεύονται.'},
+        {q:'Πώς λες «Αν και ήταν αργά, τελειώσαμε τη δουλειά»;', say:'Although it was late, we finished the work', options:['Although it was late, we finished the work','Although it was late but we finished the work','Although it was late, we finish the work','Although it was late, we finished the job'], a:0, why:'Μια πρόταση έχει μία σύνδεση. Το <span class="en">although</span> και το <span class="en">but</span> δεν μαζεύονται.'},
         {q:'Πώς λες «Στην πραγματικότητα, το πρόβλημα συνέβη επειδή έβρεχε»;', say:'In fact, the problem happened because of the rain', options:['In fact, the problem happened because of the rain','In fact, the problem happened because of the rains','In fact, the problem happen because of the rain','In fact, the problem happened because the rain'], a:0, why:'Το <span class="en">because of</span> δείχνει την αιτία, και το <span class="en">in fact</span> βάζει την πρόταση στο κέντρο.'}
       ]
     },
@@ -2489,7 +2493,7 @@ const DATA = {
         {q:'Πώς λες «Ήταν στην Αθήνα που τη συνάντησα»;', say:'It was in Athens that I met her', options:['It was in Athens that I met her','It in Athens was that I met her','It was that in Athens I met her','It was Athens in that I met her'], a:0, why:'Η σειρά είναι <span class="en">It was</span> + λέξη χρόνου + <span class="en">that</span> + η υπόθεση.'},
         {q:'Πώς λες «Αυτό που χρειάζομαι είναι περισσότερος χρόνος»;', say:'What I need is more time', options:['What I need is more time','What I need more time is','What need I is more time','What is I need more time'], a:0, why:'Με το <span class="en">what</span> βάζεις το αντικείμενο πρώτο: <span class="en">What I need</span> + <span class="en">is</span> + το συμπλήρωμα.'},
         {q:'Πώς λες «Ο λόγος που έμεινα είναι η δουλειά μου»;', say:'The reason I stayed is my job', options:['The reason I stayed is my job','The reason stayed I is my job','The reason I stayed my job is','The reason is I stayed my job'], a:0, why:'Με το <span class="en">the reason</span> ακολουθεί η υπόθεση και μετά το <span class="en">is</span> το συμπλήρωμα.'},
-        {q:'Ποιο είναι σωστό;', say:'It was Maria who called me', options:['It was Maria who called me','It was who Maria called me','It Maria was who called me','It was Maria called who me'], a:0, why:'Με το <span class="en">who</span> τονίζεις το ποιος. Η σειρά <span class="en">It was</span> + ουσιαστικό + <span class="en">who</span> + υπόθεση μένει η ίδια.'},
+        {q:'Πώς λες «Ήταν η Μαρία που μου τηλεφώνησε»;', say:'It was Maria who called me', options:['It was Maria who called me','It was who Maria called me','It Maria was who called me','It was Maria called who me'], a:0, why:'Με το <span class="en">who</span> τονίζεις το ποιος. Η σειρά <span class="en">It was</span> + ουσιαστικό + <span class="en">who</span> + υπόθεση μένει η ίδια.'},
         {q:'Τι κάνει η επιρρητική πρόταση;', say:'τονίζει ένα κομμάτι της πρότασης', options:['τονίζει ένα κομμάτι της πρότασης','αλλάζει το νόημα της πρότασης','κάνει την πρόταση επίσημη','αλλάζει τους χρόνους του ρήματος'], a:0, why:'Το νόημα μένει ακριβώς το ίδιο. Αλλάζει μόνο το κομμάτι που τονίζεται.'}
       ]
     },
@@ -2561,7 +2565,7 @@ const DATA = {
         {q:'Πώς λες «Είναι ζωτικό να ξεκινήσουμε τώρα»;', say:'It is vital that we start now', options:['It is vital that we start now','It is vital that we starts now','It is vital we start that now','It is vital that we to start now'], a:0, why:'Μετά το <span class="en">vital</span> ακολουθεί <span class="en">that</span> και η βασική μορφή του ρήματος.'},
         {q:'Πώς λες «Ας ήξερα την απάντηση»;', say:'I wish I knew the answer', options:['I wish I knew the answer','I wish I know the answer','I wish I have known the answer','I wish knew I the answer'], a:0, why:'Το <span class="en">wish</span> με παρελθοντικό ρήμα παίρνει <span class="en">knew</span>, όχι <span class="en">know</span>.'},
         {q:'Πώς λες «Συμπεριφέρθηκε σαν να ήξερε τα πάντα»;', say:'He behaved as if he knew everything', options:['He behaved as if he knew everything','He behaved as if he know everything','He behaves as if he knew everything','He behaved as he if knew everything'], a:0, why:'Το <span class="en">as if</span> ακολουθεί υποτατική, και το <span class="en">knew</span> είναι παρελθοντικό.'},
-        {q:'Ποιο είναι σωστό;', say:'It is important that we leave now', options:['It is important that we leave now','It is important that we leaves now','It is important we that leave now','It is important that we to leave now'], a:0, why:'Μετά το <span class="en">important</span> η μορφή του ρήματος είναι η βασική, χωρίς <span class="en">to</span>.'}
+        {q:'Πώς λες «Είναι σημαντικό να φύγουμε τώρα»;', say:'It is important that we leave now', options:['It is important that we leave now','It is important that we leaves now','It is important we that leave now','It is important that we to leave now'], a:0, why:'Μετά το <span class="en">important</span> η μορφή του ρήματος είναι η βασική, χωρίς <span class="en">to</span>.'}
       ]
     },
     {
@@ -2633,7 +2637,7 @@ const DATA = {
         {q:'Πώς λες «Αν ήμουν εσύ, θα έπαιρνα τη δουλειά»;', say:'If I were you, I would take the job', options:['If I were you, I would take the job','If I was you, I would take the job','If I were you, I would took the job','If I would be you, I take the job'], a:0, why:'Με το <span class="en">I</span> η φανταστική υπόθεση θέλει <span class="en">were</span>, και το <span class="en">would</span> παίρνει τη βασική μορφή.'},
         {q:'Πώς λες «Αν είχα διαβάσει, θα είχα μάθει ελληνικά»;', say:'If I had studied, I would have learned Greek', options:['If I had studied, I would have learned Greek','If I would study, I would have learned Greek','If I had studied, I would learned Greek','If I studied, I would have learned Greek'], a:0, why:'Μετά το <span class="en">if</span> βάζεις <span class="en">had</span> + παρελθοντική, και μετά <span class="en">would have</span> + τρίτη μορφή.'},
         {q:'Πώς λες «Ας είχα περισσότερα χρήματα»;', say:'I wish I had more money', options:['I wish I had more money','I wish I have more money','I wish I would have more money','I wish I had more moneys'], a:0, why:'Το <span class="en">wish</span> με το <span class="en">I</span> παίρνει <span class="en">had</span> για το παρελθόν.'},
-        {q:'Ποιο είναι σωστό;', say:'If I were you, I would have taken the job', options:['If I were you, I would have taken the job','If I was you, I would have took the job','If I were you, I would taken the job','If I would were you, I had taken the job'], a:0, why:'Υπόθεση στο παρόν και αποτέλεσμα στο παρελθόν: <span class="en">were</span> + <span class="en">would have</span>.'},
+        {q:'Πώς λες «Αν ήμουν εσύ, θα είχα πάρει τη δουλειά»;', say:'If I were you, I would have taken the job', options:['If I were you, I would have taken the job','If I was you, I would have took the job','If I were you, I would taken the job','If I would were you, I had taken the job'], a:0, why:'Υπόθεση στο παρόν και αποτέλεσμα στο παρελθόν: <span class="en">were</span> + <span class="en">would have</span>.'},
         {q:'Πώς λες «Αν ήξερα, θα το είχα κάνει»;', say:'If I knew, I would have done it', options:['If I knew, I would have done it','If I would know, I would have did it','If I knew, I would have do it','If I know, I would have done it'], a:0, why:'Με το <span class="en">if</span> και υποτακτική, το <span class="en">would</span> παίρνει <span class="en">have</span> + τρίτη μορφή.'}
       ]
     },
@@ -2712,7 +2716,7 @@ const DATA = {
         {q:'Πώς λες «Η αναφορά υποδεικνύει ότι το πρόβλημα είναι σοβαρό»;', say:'The report suggests that the problem is serious', options:['The report suggests that the problem is serious','The report suggest that the problem is serious','The report suggests that the problem are serious','The report suggests what the problem is serious'], a:0, why:'Το <span class="en">suggests</span> παίρνει πλήρη μορφή και ακολουθεί <span class="en">that</span> + υποκοριστική.'},
         {q:'Πώς λες «Θα ήταν πιθανόν μια καλή ιδέα να ρωτήσεις»;', say:'It would probably be a good idea to ask', options:['It would probably be a good idea to ask','It would probably be a good idea ask','It would probably be good idea to ask','It would probably of be a good idea to ask'], a:0, why:'Το <span class="en">would be</span> παίρνει <span class="en">probably</span> ανάμεσα, και το άπαρο <span class="en">to</span> παραμένει.'},
         {q:'Ποιο σημαίνει «φαίνεται πως»;', say:'apparently', options:['apparently','certainly','exactly','completely'], a:0, why:'Το <span class="en">apparently</span> σημαίνει «φαίνεται πως». Το <span class="en">certainly</span> σημαίνει «σίγουρα».'},
-        {q:'Ποιο είναι σωστό;', say:'She claims that the evidence is clear', options:['She claims that the evidence is clear','She claims that the evidence are clear','She claims what the evidence is clear','She claim that the evidence is clear'], a:0, why:'Το <span class="en">claims</span> παίρνει <span class="en">that</span> και υποκοριστική.'}
+        {q:'Πώς λες «Ισχυρίζεται ότι τα στοιχεία είναι σαφή»;', say:'She claims that the evidence is clear', options:['She claims that the evidence is clear','She claims that the evidence are clear','She claims what the evidence is clear','She claim that the evidence is clear'], a:0, why:'Το <span class="en">claims</span> παίρνει <span class="en">that</span> και υποκοριστική.'}
       ]
     },
     {
@@ -2789,7 +2793,7 @@ const DATA = {
         {q:'Πώς λες «Θα μπορούσατε να μου στείλετε την αναφορά;» (επίσημα);', say:'Could you please send me the report', options:['Could you please send me the report','Send me the report','You must send me the report now','I want that you send me the report'], a:0, why:'Στην επίσημη γραφή χρησιμοποιείς <span class="en">could you please</span> αντί για απευθείας προστακτική.'},
         {q:'Πώς λες «Θα εκτιμούσα αν μπορούσατε να απαντήσετε μέχρι την Παρασκευή»;', say:'I would appreciate it if you could reply by Friday', options:['I would appreciate it if you could reply by Friday','I would appreciate it if you could reply at Friday','I would appreciate that you could reply by Friday','I appreciate it you could reply by Friday'], a:0, why:'Η έκφραση <span class="en">I would appreciate it if you could</span> είναι το επίσημο ιδίωμα, πάντα με <span class="en">if</span>.'},
         {q:'Πώς λες «Ευχαριστώ για τη βοήθειά σας με το ερώτημά μου»;', say:'Thank you for your help with my query', options:['Thank you for your help with my query','Thank you for your help about my query','Thanks you for your help with my query','Thank you for you help with my query'], a:0, why:'Το <span class="en">with</span> δείχνει τον σκοπό: βοήθεια με κάτι.'},
-        {q:'Ποιο είναι επίσημο;', say:'I would appreciate it if you could send the file', options:['I would appreciate it if you could send the file','Send me the file now','I need that file','Give me the file'], a:0, why:'Το <span class="en">could you</span> και το <span class="en">I would appreciate it</span> είναι τυπικά επίσημα.'},
+        {q:'Πώς λες επίσημα «Θα εκτιμούσα αν μπορούσατε να στείλετε το αρχείο»;', say:'I would appreciate it if you could send the file', options:['I would appreciate it if you could send the file','Send me the file now','I need that file','Give me the file'], a:0, why:'Το <span class="en">could you</span> και το <span class="en">I would appreciate it</span> είναι τυπικά επίσημα.'},
         {q:'Πώς λες «Μού ενημερώνετε σχετικά με τις συνημμένες πληροφορίες»;', say:'Inform me regarding the attached information', options:['Inform me regarding the attached information','Informed me regarding the attached information','Inform me regarding the attach information','Inform me regarding the attached informations'], a:0, why:'Το <span class="en">regarding</span> και το <span class="en">attached</span> είναι λόγια επιστολής. Το <span class="en">information</span> είναι ασυμβίβαστο.'}
       ]
     },
@@ -2866,7 +2870,7 @@ const DATA = {
         {q:'Πώς λες «Σας γράφω για να ζητήσω βοήθεια σχετικά με το αίτημά μας»;', say:'I am writing to ask for assistance regarding our request', options:['I am writing to ask for assistance regarding our request','I writing to ask for assistance regarding our request','I am write to ask assistance regarding our request','I am writing to ask for assist regarding our request'], a:0, why:'Η φόρμα <span class="en">I am writing to</span> + λόγος είναι το επίσημο άνοιγμα.'},
         {q:'Πώς λες «Παραθέτω το έγγραφο για την αναθεώρησή σας»;', say:'Please find attached the document for your review', options:['Please find attached the document for your review','Please find attach the document for your review','Please find attached the document to you review','Please find attached the documents for your review'], a:0, why:'Το <span class="en">attached</span> είναι επίθετο και το <span class="en">the document</span> είναι ουσιαστικό.'},
         {q:'Πώς λες «Θα ήμασταν ευγνώμων αν μπορούσατε να απαντήσετε σύντομα»;', say:'We would be grateful if you could reply soon', options:['We would be grateful if you could reply soon','We would be grateful you could reply soon','We would be grateful if you could replies soon','We would be grateful if you could reply now'], a:0, why:'Η επίσημη φόρμα έχει πάντα το <span class="en">if</span> ανάμεσα στο <span class="en">grateful</span> και το <span class="en">could</span>.'},
-        {q:'Ποιο είναι σωστό;', say:'However, the schedule does not permit a meeting', options:['However, the schedule does not permit a meeting','However, the schedule not permit a meeting','However the schedule does not permit a meeting','However, the schedules does not permit a meeting'], a:0, why:'Το <span class="en">does not</span> παίρνει <span class="en">permit</span> στη βασική μορφή, και το <span class="en">However</span> ακολουθείται από κόμμα.'},
+        {q:'Πώς λες «Ωστόσο, το πρόγραμμα δεν επιτρέπει συνάντηση»;', say:'However, the schedule does not permit a meeting', options:['However, the schedule does not permit a meeting','However, the schedule not permit a meeting','However, the schedule does not permits a meeting','However, the schedules does not permit a meeting'], a:0, why:'Το <span class="en">does not</span> παίρνει <span class="en">permit</span> στη βασική μορφή, και το <span class="en">However</span> ακολουθείται από κόμμα.'},
         {q:'Τι σημαίνει το επίσημο «do not hesitate to contact us»;', say:'μη διστάσεις να επικοινωνήσεις μαζί μας', options:['μη διστάσεις να επικοινωνήσεις μαζί μας','μην ανησύχησες για τη σύνδεσή μας','μη διστάσεις να με περιμένεις','μη σταματήσεις να ψάχνεις μαζί μας'], a:0, why:'Το <span class="en">hesitate</span> σημαίνει «διστάζω». Η έκφραση προσκαλεί επαφή, δεν απειλεί.'}
       ]
     },
@@ -4068,6 +4072,11 @@ function exampleRow(e) {
 /* ==========================================================
    ΔΟΚΙΜΗ
    ========================================================== */
+function normText(t) {
+  return String(t == null ? '' : t).toLowerCase()
+    .replace(/[^\p{L}\p{N}\s]/gu, ' ').replace(/\s+/g, ' ').trim();
+}
+
 function mountQuiz(host, questions, key, onFinish) {
   let idx = 0, score = 0;
   const KEYS = ['Α', 'Β', 'Γ', 'Δ'];
@@ -4084,10 +4093,18 @@ function mountQuiz(host, questions, key, onFinish) {
     host.appendChild(head);
 
     const body = document.createElement('div');
+    // the English phrase is printed only when it cannot give the answer away:
+    // not when it is one of the options, and not when the prompt already shows it
+    const leaks = q.say ? q.options.some(function (o) { return normText(o) === normText(q.say); }) : false;
+    const inPrompt = q.say ? normText(String(q.q).replace(/<[^>]*>/g, ' ')).indexOf(normText(q.say)) !== -1 : false;
+    const showPhrase = !!q.say && !leaks && !inPrompt;
+    const showAudio = !!q.say && !leaks;
     body.innerHTML =
       '<p class="q-title">' + q.q + '</p>' +
-      (q.say ? '<div class="q-hear"><span class="en-block">' + q.say + '</span> ' +
+      (showPhrase ? '<div class="q-hear"><span class="en-block">' + q.say + '</span> ' +
         '<button class="spk" data-say="' + q.say + '" aria-label="Άκουσε την αγγλική φράση">' + ICON_SPK + '</button></div>' : '') +
+      (showAudio && !showPhrase ? '<div class="q-hear audio-only"><button class="spk" data-say="' + q.say + '" aria-label="Άκουσε την αγγλική φράση">' + ICON_SPK + '</button></div>' : '') +
+      (leaks ? '<p class="q-hint">Θα βρεις τη λέξη και τον ήχο της στη λίστα λέξεων παραπάνω.</p>' : '') +
       '<div class="q-options" role="radiogroup" aria-label="Διαλέξτε μία απάντηση">' +
         q.options.map((o, i) =>
           '<label class="opt"><input type="radio" name="q_' + key + '_' + idx + '" value="' + i + '">' +
@@ -4111,15 +4128,20 @@ function mountQuiz(host, questions, key, onFinish) {
           else if (i === picked) l2.classList.add('is-wrong');
         });
         const slot = $('.fb-slot', body);
+        const answerEn = q.options[q.a];
+        const answerAudio = /[A-Za-z]/.test(answerEn)
+          ? ' <button class="spk spk-inline" data-say="' + answerEn + '" aria-label="Άκουσε τη σωστή απάντηση">' + ICON_SPK + '</button>'
+          : '';
         slot.innerHTML = '<div class="feedback ' + (right ? 'good' : 'bad') + '">' +
           '<span class="fb-ico">' + (right ? '✓' : '✕') + '</span><div>' +
           '<div class="fb-title ' + (right ? 'good' : 'bad') + '">' + (right ? 'Σωστό!' : 'Όχι, δεν είναι σωστό') + '</div>' +
           '<div class="fb-text">' + q.why + '</div>' +
-          (right ? '' : '<div class="fb-en">Η σωστή απάντηση: <span class="en">' + q.options[q.a] + '</span></div>') +
+          '<div class="fb-en">Η σωστή απάντηση: <span class="en">' + answerEn + '</span>' + answerAudio + '</div>' +
           '</div></div>' +
           '<div style="margin-top:14px"><button class="btn" id="qNext">' +
           (idx === questions.length - 1 ? 'Δες το αποτέλεσμα' : 'Επόμενη ερώτηση') + '</button></div>';
         $('#live').textContent = right ? 'Σωστή απάντηση' : 'Λάθος. Η σωστή απάντηση είναι ' + q.options[q.a];
+        bindSpeakButtons(slot);
         $('#qNext', slot).addEventListener('click', () => { idx++; render(); });
         $('#qNext', slot).focus();
       });
